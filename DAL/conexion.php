@@ -1,22 +1,19 @@
 <?php
+$servername = "localhost";
+$username = "root";
+$password = ""; 
+$database = "DB_PROYECTO_DWP_2";
 
-function Conecta() {
-    $server = "localhost";
-    $user = "root";
-    $password = "";
-    $database = "DB_PROYECTO_DWP_2";
+// Crear conexión
+$conn = new mysqli($servername, $username, $password, $database);
 
-    // 1. Establecer la conexión mysqli
-    $conexion = mysqli_connect($server, $user, $password, $database);
-
-    // 2. verficar que la conexion este correcta
-    if(!$conexion){
-        echo "Ocurrió un error al establecer la conexión " . mysqli_connect_error();
-    }
-
-    return $conexion;
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
 }
 
-function Desconectar($conexion) {
-    mysqli_close($conexion);
-}
+echo "Conexión exitosa";
+
+// Cerrar conexión
+$conn->close();
+?>
