@@ -1,22 +1,22 @@
+
+
 <!DOCTYPE html>
 <!--
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
     <head th:fragment="head">
-        <title>Creaciones Mari </title>
+        <title>$tituloPagina</title>
         <meta charset="UTF-8"/>
 
-        <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-        <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
-        <link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link th:href="@{/img/favicon.png}" type="image/png" rel="icon"/> 
-        <link th:href="@{/css/MainCSS.css}" rel="stylesheet"/>
+        <link href="../../css/MainCSS.css" rel="stylesheet"/>
 
-        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-        <script th:src="@{/js/MainJS.js}"></script>
+        <script src="https://kit.fontawesome.com/93180eb977.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="../../js/MainJS.js"></script>
     </head>
     <body>
         <header th:fragment="headerPaginas" class="header">
@@ -27,23 +27,23 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <ul class="navbar-nav">
-                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" th:href="@{/menuprincipal}">Inicio</a></li>
-                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" th:href="@{/galeria}">Galeria</a></li>
-                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" th:href="@{/foro}">Foro</a></li>
+                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" href="../../Pages/MenuPrincipal/Index.php">Inicio</a></li>
+                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" href="../../Pages/Galeria/Index.php">Galeria</a></li>
+                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" href="../../Pages/Foro/Index.php">Foro</a></li>
                             <li class="nav-item px-5">
-                                <a class="nav-menu-link nav-link" th:href="@{/menuprincipal}">
-                                    <img th:src="@{/img/logo.png}" alt="Logo" class="logo-img" />
+                                <a class="nav-menu-link nav-link" href="../../Pages/MenuPrincipal/Index.php">
+                                    <img src="../../img/logo.png" alt="Logo" class="logo-img" />
                                 </a>
                             </li>
-                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" th:href="@{/encargos}">Encargos</a></li>
-                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" th:href="@{/historial}">Historial</a></li>
+                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" href="../../Pages/Encargos/Index.php">Encargos</a></li>
+                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" href="../../Pages/HistorialC/Index.php">Historial</a></li>
                             <li class="nav-item px-5">
-                                <a class="nav-menu-link nav-link" th:href="@{/perfil}">
+                                <a class="nav-menu-link nav-link" href="../../Pages/Perfil/Index.php">
                                     <img src="https://firebasestorage.googleapis.com/v0/b/techshop-7645b.appspot.com/o/techshop%2Fusuarios%2Fimg0000000000000000004perfil1.jpg?alt=media&token=e67dfd3b-85d8-4d4e-8dc0-cdf182826b96" alt="Foto de Perfil" class="perfil-img" />
                                 </a>
                             </li>
                             <li class="nav-item px-5">
-                                <a class="nav-menu-link nav-link" th:href="@{/}">
+                                <a class="nav-menu-link nav-link" href="@{/}">
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 </a>
                             </li>
@@ -61,24 +61,25 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <ul class="navbar-nav">
-                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" th:href="@{/menuprincipal}">Inicio</a></li>
-                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" th:href="@{/galeria}">Galeria</a></li>
-                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" th:href="@{/foro}">Foro</a></li>
+                        <li class="nav-item px-5"><a class="nav-menu-link nav-link" href="../../Pages/MenuPrincipal/Index.php">Inicio</a></li>
+                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" href="../../Pages/Galeria/Index.php">Galeria</a></li>
+                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" href="../../Pages/Foro/Index.php">Foro</a></li>
                            <li class="nav-item px-5">
                             </li>
                              <li class="nav-item px-5">
                             </li>
                             <li class="nav-item px-5">
                             </li>
-                            <li class="nav-item px-5" style="padding-left: 250px"><a class="nav-menu-link nav-link" th:href="@{/encargos}">Encargos</a></li>
-                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" th:href="@{/historial}">Historial</a></li>
+                            <li class="nav-item px-5"style="padding-left: 250px"><a class="nav-menu-link nav-link" href="../../Pages/Encargos/Index.php">Encargos</a></li>
+                            <li class="nav-item px-5"><a class="nav-menu-link nav-link" href="../../Pages/HistorialC/Index.php">Historial</a></li>
+
                             <li class="nav-item px-5">
-                                <a class="nav-menu-link nav-link" th:href="@{/perfil}">
+                            <a class="nav-menu-link nav-link" href="../../Pages/Perfil/Index.php">
                                     <img src="https://firebasestorage.googleapis.com/v0/b/techshop-7645b.appspot.com/o/techshop%2Fusuarios%2Fimg0000000000000000004perfil1.jpg?alt=media&token=e67dfd3b-85d8-4d4e-8dc0-cdf182826b96" alt="Foto de Perfil" class="perfil-img" />
                                 </a>
                             </li>
                             <li class="nav-item px-5">
-                                <a class="nav-menu-link nav-link" th:href="@{/}">
+                                <a class="nav-menu-link nav-link" href="@{/}">
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 </a>
                             </li>
@@ -87,16 +88,3 @@
                 </div>
             </nav>
         </header>
-        
-
-        <footer th:fragment="footer footer-Proyecto" class="bg-white text-black mt-5 p-1" style="position: fixed; bottom: 0; width:100%;">
-            <div class="container ">
-                <div class="col">
-                    <p class="lead text-center ">
-                       &COPY; Derechos Reservados Creaciones Mari 2023 <!-- <i class="fa fa-whatsapp" aria-hidden="true"></i> <i class="fa fa-facebook-square" aria-hidden="true"></i> <i class="fa fa-instagram" aria-hidden="true"></i>-->
-                    </p>
-                </div>
-            </div>
-        </footer>
-    </body>
-</html>

@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-    <head th:replace="~{Layout/_Layout :: head}">
-        <title>Creaciones Mari</title>
-    </head>
-    <body>
-        <section th:fragment="IniciarSesion">
+<?php
+function IniciarSesion()
+{
+?>
+        <section>
             <div class="container">
                 <div class="row row-Card">
                     <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -45,8 +41,12 @@
                 </div>
             </div>
         </section>
-        
-        <section th:fragment="Registrar">
+<?php
+}  
+  
+function Registrar(){
+    ?>      
+        <section>
             <div class="container">
                 <div class="row row-Card">
                     <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -105,5 +105,6 @@
                 </div>
             </div>
         </section>
-    </body>
-</html>
+<?php
+}
+?>

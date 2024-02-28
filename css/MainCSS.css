@@ -161,9 +161,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 .bubble-row {
-    border: 1px solid #ccc; /* Ajusta según tus preferencias */
-    border-radius: 15px; /* Ajusta según tus preferencias */
-    margin-bottom: 10px; /* Ajusta según tus preferencias */
-    padding: 10px; /* Ajusta según tus preferencias */
+    border: 1px solid #ccc;
+    border-radius: 15px; 
+    margin-bottom: 10px; 
+    padding: 10px; 
 }
 
