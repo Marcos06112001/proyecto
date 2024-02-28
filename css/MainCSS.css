@@ -1,0 +1,169 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 8 nov 2023, 23:54:21
+    Author     : David Chaves
+*/
+
+.bg-Proyecto {
+    background: linear-gradient(to bottom, #FFD7C5, #FFFFFF);
+    align-content: center;
+}
+.bg-Header-Proyecto {
+    background: #F5BB97;
+    border-bottom-color: darksalmon;
+    border-bottom-style: solid;
+}
+.footer-Proyecto {
+    background: #FFFFFF;
+    border-top-color: darkgray !important;
+    border-top-style: solid;
+}
+
+.navbar {
+    height: 100px;
+}
+
+.nav-menu-link {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+.logo-img {
+    width: 200px;
+    height: 98px;
+    margin-right: 10px;
+    padding-top: 0;
+}
+
+.logo-img-Login {
+    width: 70%;
+    height: 45%;
+    padding-left: 30%;
+}
+
+.bannerH-img {
+    width: 100%;
+    height: 100%;
+}
+
+.bannerV-img {
+    width: 200px;
+    height: 94%;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1; 
+}
+
+.header {
+    position: relative;
+}
+
+.perfil-img {
+    width: 80px; 
+    height: 80px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+
+.card-Proyecto{
+    width: 100%;
+    height: 100%;
+    border-style: unset;
+}
+
+.card-body-Proyecto{
+    background: white;
+    align-content: center;
+}
+
+.card-header-Proyecto{
+    background: #F5BB97;
+    align-content: center;
+}
+
+
+.btn-Proyecto{
+    background-color: #FFD5BB;
+    border: none;
+    border-radius: 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-Proyecto:hover{
+    background-color: #FEEAD8;
+    border: none;
+    border-radius: 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-Secon-Proyecto{
+    background-color: #FFE9BA;
+    border: none;
+    border-radius: 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-Secon-Proyecto:hover{
+    background-color: #FEF4E2;
+    border: none;
+    border-radius: 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+
+.row-Card{
+    height: 80%;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.degradado-izq-der {   
+    background: linear-gradient(to right, #F5BB97, white);
+     
+}
+
+.degradado-der-izq {
+    background-image: linear-gradient(to right, #FFDECA, white);
+}
+
+.agregarFotoPerf{
+    background-image: url('../img/agregarImg.png');
+}
+
+.inptAgregarFotoPerf{
+    display: none;
+}
+
+.card{
+    height:100%;
+}
+
+.bubble-row {
+    border: 1px solid #ccc; /* Ajusta según tus preferencias */
+    border-radius: 15px; /* Ajusta según tus preferencias */
+    margin-bottom: 10px; /* Ajusta según tus preferencias */
+    padding: 10px; /* Ajusta según tus preferencias */
+}
+

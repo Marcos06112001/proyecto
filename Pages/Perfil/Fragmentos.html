@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{Layout/_Layout :: head}">
+        <title>Proyecto</title>
+    </head>
+    <body>
+
+        <section th:fragment="contenedorPrincipal">
+            <div class="container">
+                <form method="GET" 
+                      th:object="${usuario}"
+                      class="was-validated"                          
+                      enctype="multipart/form-data">
+                    <div class="row row-Card">
+                        <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="card card-Proyecto">
+                                <div class="card-header card-header-Proyecto">
+                                    <h2 class="text-black font-weight-bold text-center">Perfil</h2>
+                                </div>
+                                <div class="card-body card-body-Proyecto">
+                                    <div class="row col-12 mb-4">
+                                        <th:block th:if="${usuario.rutaImagen == null}">
+                                            <img th:src="@{/img/perf.png}" alt="FotoPerfil" class="img-fluid rounded-circle p-1" style="max-width: 150px; margin-left: 45%;"/>
+                                            
+                                        </th:block>
+                                        <th:block th:unless="${usuario.rutaImagen == null}">
+                                            
+                                            <img th:src="*{rutaImagen}" alt="FotoPerfil" class="img-fluid rounded-circle p-1" style="max-width: 150px; margin-left: 45%;"/>
+                                        </th:block>    
+                                        
+                                    </div>
+                                    <div class="row col-12 mb-5">
+                                        <label  for="nombre">Nombre:</label>
+                                        <input type="text" class="form-control" name="nombre" th:field="*{nombre}" style="border-radius: 20px;" readonly="readonly"/>
+                                    </div>
+                                    <div class="row col-12 mb-5">
+                                        <label for="apellidos1">Primer Apellido:</label>
+                                        <input type="text" class="form-control" name="apellido1" th:field="*{apellido1}" style="border-radius: 20px;" readonly="readonly"/>
+                                    </div>
+                                    <div class="row col-12 mb-5">
+                                        <label for="apellido2">Segundo Apellido:</label>
+                                        <input type="text" class="form-control" name="apellido2"  th:field="*{apellido2}" style="border-radius: 20px;" readonly="readonly"/>
+                                    </div>
+                                    <div class="row col-12 mb-5">
+                                        <label for="correo">Correo Electronico:</label>
+                                        <input type="text" class="form-control" name="correo" th:field="*{correo}" style="border-radius: 20px;" readonly="readonly"/>
+                                    </div>
+                                    <div class="row col-12 text-center">
+                                        <a th:href="@{/perfil/modificar/}" class="btn btn-Proyecto" >
+                                            <i class="fas fa-pencil"></i> Editar</a>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <img th:src="@{/img/bannerH.png}" alt="BannerHorizontal" class="bannerH-img"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section th:fragment="editarPerfil">
+            <div class="container">
+                <form method="POST"
+                      th:action="@{/perfil/guardar}" 
+                      th:object="${usuario}" 
+                      class="was-validated" 
+                      enctype="multipart/form-data">
+                    <input type="hidden" name="correo" th:field="*{correo}"/>
+                    <div id="details">
+                        <div class="row row-Card">
+                            <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="card card-Proyecto">
+                                    <div class="card-header card-header-Proyecto">
+                                        <h2 class="text-black font-weight-bold text-center">Editar Perfil</h2>
+                                    </div>
+                                    <div class="card-body card-body-Proyecto" style="background: linear-gradient(to left, #F5BB97, white);">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <h4 class="text-center">Editar Informacion de Perfil</h4>
+                                                <div class="row col-12 mb-5">
+                                                    <label  for="nombre">Nombre:</label>
+                                                    <input type="text" class="form-control" name="nombre" th:field="*{nombre}" style="border-radius: 20px;"/>
+                                                </div>
+                                                <div class="row col-12 mb-5">
+                                                    <label for="apellidos1">Primer Apellido:</label>
+                                                    <input type="text" class="form-control" name="apellido1" th:field="*{apellido1}" style="border-radius: 20px;"/>
+                                                </div>
+                                                <div class="row col-12 mb-5">
+                                                    <label for="apellido2">Segundo Apellido:</label>
+                                                    <input type="text" class="form-control" name="apellido2"  th:field="*{apellido2}" style="border-radius: 20px;"/>
+                                                </div>
+                                                <div class="row col-12 mb-3">
+                                                    <label for="txtCorreo">Correo Electronico:</label>
+                                                    <input type="text" class="form-control" name="txtCorreo" th:field="*{correo}" disabled="disabled"  required="true" style="border-radius: 20px;"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="txtContra">Contraseña:</label>
+                                                    <input type="text" class="form-control" name="txtContra" required="true" style="border-radius: 20px;"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-center" >
+                                                <div class="row col-12 mb-5">
+                                                    <h4>Agregar Imagen</h4>
+                                                    <div class="p-5">
+                                                        <center>
+                                                            <label for="inputImagen" class="agregarFotoPerf" style="cursor: pointer; display: block; background-size: cover; width: 300px; height: 275px;background-image: url('../../img/agregarImg.png');"></label>
+                                                            <input type="file" id="inputImagen" name="imagen" style="display:none;"  />
+                                                        </center>
+                                                    </div>
+                                                </div>
+                                                <div class="row col-12">
+                                                    <div class="col-md-4 d-grid">
+                                                        <a th:href="@{/perfil}" class="btn btn-primary">
+                                                            <i class="fas fa-arrow-left"></i> Cancelar
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-4 d-grid">   
+
+                                                    </div>
+                                                    <div class="col-md-4 d-grid">
+                                                        <button type="submit" class="btn btn-success">
+                                                            <i class="fas fa-check"></i> Guardar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </body>
+</html>
