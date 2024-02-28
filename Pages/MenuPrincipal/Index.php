@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-    <head th:replace="~{Layout/_Layout :: head}">
-        <title>Creaciones Mari</title>
-    </head>
-    <body>
-        <section th:fragment="SectionMP">
+<?php
+    $tituloPagina = "Creaciones Mari - Iniciar Sesion";
+    session_start();
+    include "../../include/templates/headerMain.php";
+    require_once "../../include/functions/recoge.php";
+    
+?>
+
+<main class="bg-Proyecto">
+    <section th:fragment="SectionMP">
             <div class="container">
                 <div class="row">
                     <div class="col col-sm-12 col-md-12 col-lg-5 col-xl-5">
@@ -64,5 +65,8 @@
                 </div>
             </div>
         </section>
-    </body>
-</html>
+</main>
+
+<?php
+    include "../../include/templates/footer.php";
+?>

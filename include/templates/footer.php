@@ -1,4 +1,4 @@
-        <footer th:fragment="footer footer-Proyecto" class="bg-white text-black mt-5 p-1" style="position: fixed; bottom: 0; width:100%;">
+        <footer class="bg-white text-black mt-5 p-1" style="position: fixed; bottom: 0; width:100%;">
             <div class="container ">
                 <div class="col">
                     <p class="lead text-center ">
