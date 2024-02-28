@@ -41,7 +41,7 @@
                                 </a>
                             </li>
                             <li class="nav-item px-5">
-                                <a class="nav-menu-link nav-link" href="@{/}">
+                                <a class="nav-menu-link nav-link" href="../../Pages/Login/Index.php">
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 </a>
                             </li>

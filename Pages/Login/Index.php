@@ -12,27 +12,56 @@
             $Correo = recogePost("correo");
             $Pass = recogePost("pass");
 
-            $passwordHash = password_hash($Pass, PASSWORD_BCRYPT);
+            //$passwordHash = password_hash($Pass, PASSWORD_BCRYPT);
 
             $User = ObtenerUnUsuarios($Correo);
+            
 
-            if($User['CONTRASENA'] == $passwordHash)
-            {
-                if (empty($errores)) {
-                    $_SESSION['correoGlobal'] = $Correo;
-                    header("Location: ../MenuPrincipal/Index.php");  
-                }
-            }
-            else
+            if($User == false)
             {
                 echo "<script>
-                    Swal.fire({
-                        title: 'Credenciales Invalidos',
-                        text: 'Los credenciales no coinciden',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                </script>";
+                        Swal.fire({
+                            title: 'Credenciales Inválidos',
+                            text: 'No existe un usuario con el correo digitado',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    </script>";
+            }else 
+            {
+                $auth = password_verify($Pass, $User['CONTRASENA']);
+                if($auth)
+                {
+                    $_SESSION['correoGlobal'] = $Correo;
+                    header("Location: ../MenuPrincipal/Index.php");
+                }
+                else{
+                    echo "<script>
+                        Swal.fire({
+                            title: 'Credenciales Inválidos',
+                            text: 'Los credenciales no coinciden',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    </script>";
+                }
+                    
+
+            }
+        }
+        else if ($_SERVER['REQUEST_METHOD'] == 'GET')
+        {
+            $estado = recogeGet("estado");
+            if($estado == 1)
+            {
+                echo "<script>
+                        Swal.fire({
+                            title: 'Usuario Registrado',
+                            text: 'Se registró correctamente, proceda a Iniciar Sesión!',
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        });
+                    </script>"; 
             }
         }
     }

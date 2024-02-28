@@ -19,7 +19,10 @@
             if($Pass == $PassR){
                 $passwordHash = password_hash($Pass, PASSWORD_BCRYPT);
                 $result = InsertarUsuarios($Correo,$passwordHash,$Nom,$Ape1,$Ape2);
-                if(!result){
+                if($result == true){
+                    header("Location: Index.php?estado=1");
+                }
+                else{
                     echo "<script>
                             Swal.fire({
                                 title: 'Error',
@@ -28,9 +31,7 @@
                                 confirmButtonText: 'Ok'
                             });
                         </script>";
-                }
-                else{
-                    header("Location: Index.php");  
+                    
                 }
             }
             else
