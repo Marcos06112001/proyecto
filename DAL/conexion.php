@@ -1,6 +1,4 @@
 <?php
-
-
 function Conecta(){
     $servername = "localhost";
     $username = "root";
@@ -29,6 +27,6 @@ function Conecta(){
 function Desconectar($conexion) {
     mysqli_close($conexion);
 }
-
+?>
 
 

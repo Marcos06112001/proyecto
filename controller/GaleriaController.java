@@ -53,17 +53,18 @@ public class GaleriaController {
     public String perfilModificar() {
         return "/galeria/modifica";
     }
+}
     
     
     
-    /*public String categoriaModificar(Usuarios categoria, Model model) {
+    public String categoriaModificar(Usuarios categoria, Model model) {
         categoria = usuariosService.getUsuarios(categoria);
         model.addAttribute("categoria", categoria);
         return "/categoria/modifica";
-    }*/
+    }
     
     
-    /*
+    
     
     @GetMapping("/nuevo")
     public String categoriaNuevo(Usuarios categoria) {
@@ -95,4 +96,3 @@ public class GaleriaController {
     }*/
 
     
-}

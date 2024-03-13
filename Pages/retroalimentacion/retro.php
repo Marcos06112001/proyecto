@@ -1,0 +1,52 @@
+<?php
+echo "<h2>Retroalimentación Registrada</h2>";
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "DB_PROYECTO_DWP_2";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+  die("Conexión fallida: " . $conn->connect_error);
+}
+
+
+$sql = "SELECT * FROM TAB_RETROALIMENTACION";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  // Mostrar los datos en una tabla
+  echo "<table>";
+  echo "<tr><th>CORREO</th><th>COD_RETROALIMENTACION</th><th>COMENTARIO</th><th>VALORACION</th></tr>";
+  while($row = $result->fetch_assoc()) {
+    echo "<tr>";
+    echo "<td>".$row["CORREO"]."</td>";
+    echo "<td>".$row["COD_RETROALIMENTACION"]."</td>";
+    echo "<td>".$row["COMENTARIO"]."</td>";
+    echo "<td>".$row["VALORACION"]."</td>";
+    echo "</tr>";
+  }
+  echo "</table>";
+} else {
+  echo "0 resultados";
+}
+
+// Cerrar conexión
+$conn->close();
+?>
+
+<h2>Envía tu Retroalimentación</h2>
+<form method="post" action="guardar_retroalimentacion.php">
+  <label for="correo">Correo Electrónico:</label><br>
+  <input type="email" id="correo" name="correo" required><br><br>
+  
+  <label for="comentario">Comentario:</label><br>
+  <textarea id="comentario" name="comentario" rows="4" cols="50" required></textarea><br><br>
+  
+  <label for="valoracion">Valoración (1-5):</label><br>
+  <input type="number" id="valoracion" name="valoracion" min="1" max="5" required><br><br>
+  
+  <input type="submit" value="Enviar">
+</form>
