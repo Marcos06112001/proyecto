@@ -11,6 +11,9 @@
             $Correo = $_SESSION['correoGlobal'];
             $metodos = ObtenerMetodosPago($Correo);
         }
+        elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        }
     }
     catch(\Throwable $th)
     {
@@ -66,22 +69,27 @@
                                             </div>
                                         </div>
                                         <div class="col-3" >
-                                            <form action="/pagos/pay/<?php echo $m['NUM_TARJETA']; ?>" method="post">
+                                            <form method="post">
+                                                <input type="hidden" name="accion" value="pagar">
                                                 <div class="row col-12 p-1">
                                                     <label for="codSeguridad">Código de Seguridad:</label>
                                                     <input type="number" id="codSeguridad" name="codSeguridad" class="form-control" required />
+                                                    <input type="hidden" name="numTarjeta" value="<?php echo $m['NUM_TARJETA']; ?>">
+                                                    <input type="hidden" name="accion" value="pagar">
                                                 </div>
                                                 <div class="row p-3">
                                                     <div class="col-6">
                                                         <button type="submit" class="btn btn-Proyecto">Pagar</button>
                                                     </div>
-                                            </form>
-                                                <div class="col-6">
-                                                    <form action="/pagos/delete/<?php echo $m['NUM_TARJETA']; ?>" method="post">
-                                                        <button type="submit" class="btn btn-Secon-Proyecto">Eliminar</button>
-                                                    </form>
                                                 </div>
-                                            </div>
+                                            </form>
+                                            <form method="post">
+                                                <input type="hidden" name="numTarjeta" value="<?php echo $m['NUM_TARJETA']; ?>">
+                                                <input type="hidden" name="accion" value="eliminar">
+                                                <div class="col-6">
+                                                    <button type="submit" class="btn btn-Secon-Proyecto">Eliminar</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
