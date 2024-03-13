@@ -85,8 +85,10 @@ function contenedorPrincipal(){
                                                 <div class="mb-3">
                                                     <label  for="txtNombre">Ejemplo:</label>
                                                     <center>
-                                                        <label for="inputImagen" class="agregarFotoPerf" style="cursor: pointer; display: block; background-size: cover; width: 150px; height: 133px;background-image: url('../../img/agregarImg.png');"></label>
-                                                        <input type="file" id="inputImagen" name="imagen" style="display:none;"  />
+                                                        <label for="inputImagen" class="agregarFotoPerf" style="cursor: pointer; display: block; background-size: cover; width: 150px; height: 133px;background-image: url('../../img/agregarImg.png');">
+                                                            <img id="blah" src="#" style="max-width:100%; max-height:100%; display: none;" />
+                                                        </label>
+                                                        <input type="file" onchange="readURL(this);" id="inputImagen" name="imagen" style="display:none;" />
                                                     </center>
                                                 </div>
                                             </div>
