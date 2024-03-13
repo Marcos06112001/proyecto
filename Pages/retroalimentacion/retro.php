@@ -1,40 +1,63 @@
 <?php
 echo "<h2>Retroalimentación Registrada</h2>";
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "DB_PROYECTO_DWP_2";
+function Conecta(){
+    $servername = "localhost";
+    $username = "root";
+    $password = ""; 
+    $database = "DB_PROYECTO_DWP_2";
+    try{
+        // Crear conexión
+        $conn = new mysqli($servername, $username, $password, $database);
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+        // Verificar conexión
+        if ($conn->connect_error) {
+            echo "Ocurrió un error al establecer la conexión " . mysqli_connect_error();
+            die("Error de conexión: " . $conn->connect_error);
+            
+        }
+        return $conn;
 
-if ($conn->connect_error) {
-  die("Conexión fallida: " . $conn->connect_error);
+    }
+    catch(\Throwable $ex)
+    {
+        echo $ex;
+        error_log($ex);
+    }  
 }
 
-
-$sql = "SELECT * FROM TAB_RETROALIMENTACION";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-  // Mostrar los datos en una tabla
-  echo "<table>";
-  echo "<tr><th>CORREO</th><th>COD_RETROALIMENTACION</th><th>COMENTARIO</th><th>VALORACION</th></tr>";
-  while($row = $result->fetch_assoc()) {
-    echo "<tr>";
-    echo "<td>".$row["CORREO"]."</td>";
-    echo "<td>".$row["COD_RETROALIMENTACION"]."</td>";
-    echo "<td>".$row["COMENTARIO"]."</td>";
-    echo "<td>".$row["VALORACION"]."</td>";
-    echo "</tr>";
-  }
-  echo "</table>";
-} else {
-  echo "0 resultados";
+function Desconectar($conexion) {
+    mysqli_close($conexion);
 }
 
-// Cerrar conexión
-$conn->close();
+$conn = Conecta();
+
+try {
+    $stmt = $conn->prepare("SELECT CORREO, COD_RETROALIMENTACION, COMENTARIO, VALORACION FROM TAB_RETROALIMENTACION");
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Mostrar los datos en una tabla
+        echo "<table>";
+        echo "<tr><th>CORREO</th><th>COD_RETROALIMENTACION</th><th>COMENTARIO</th><th>VALORACION</th></tr>";
+        while($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>".$row["CORREO"]."</td>";
+            echo "<td>".$row["COD_RETROALIMENTACION"]."</td>";
+            echo "<td>".$row["COMENTARIO"]."</td>";
+            echo "<td>".$row["VALORACION"]."</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "0 resultados";
+    }
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+} finally {
+    Desconectar($conn);
+}
 ?>
 
 <h2>Envía tu Retroalimentación</h2>
