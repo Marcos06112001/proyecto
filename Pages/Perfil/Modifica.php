@@ -35,24 +35,37 @@
                         $insert = UpdateUsuarios($correo,$passwordHash,$nombre,$ape1,$ape2,$rutaImagen);
 
                         if ($insert) {
-                            
+                            header("Location: Index.php?estado=1");
+
+                        } else {
                             echo "<script>
                                 Swal.fire({
-                                    title: 'Se modifico correctamente su usuario',
-                                    text: 'Se ha modificado correctamente su usuario!',
-                                    icon: 'success',
+                                    title: 'Error',
+                                    text: 'Ha ocurrido un error al modificar el usuario',
+                                    icon: 'error',
                                     confirmButtonText: 'Ok'
                                 });
                             </script>";
-
-                        } else {
-                            echo "<script>alert('Error al insertar el encargo');</script>";
                         }
                     } else {
-                        echo "<script>alert('Error al mover la imagen');</script>";
+                        echo "<script>
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ha ocurrido un error al guardar la imagen',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                });
+                            </script>";
                     }
                 } else {
-                    echo "<script>alert('Error al cargar la imagen');</script>";
+                    echo "<script>
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ha ocurrido un error al cargar la imagen',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    </script>";
                 }
             }
             else //no hay imagen
@@ -61,16 +74,16 @@
                 $insert = InsertarEncargo($correo, $nomDiseno, $desDiseno, $tamano, "", null , 0);
 
                 if ($insert) {
-                    echo "<script>
-                        Swal.fire({
-                            title: 'Se realizó correctamente el encargo',
-                            text: 'Se ha hecho el encargo correctamente! Pronto se va a visualizar en su historial',
-                            icon: 'success',
-                            confirmButtonText: 'Ok'
-                        });
-                    </script>";
+                    header("Location: Index.php?estado=1");
                 } else {
-                    echo "<script>alert('Error al insertar el encargo');</script>";
+                    echo "<script>
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ha ocurrido un error al modificar el usuario',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                });
+                            </script>";
                 }
             }
 
