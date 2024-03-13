@@ -36,16 +36,15 @@ function ObtenerEncargos(){
 function ObtenerUnEncargos($pCorreo){
     try {
         $oConexion = Conecta();
-        $retorno = false;
 
         // formato de datos utf8
         if(mysqli_set_charset($oConexion, "utf8")){
 
             if(!$result = mysqli_query($oConexion, "SELECT CORREO, COD_ENCARGO, NOM_DISENO, DES_DISENO, TAM_DISENO, PRECIO_DISENO, RUTA_IMAGEN, COD_DIRECCION_DEST, IND_ESTADO, IND_PAGADO, IND_EXPRESS FROM TAB_ENCARGOS where CORREO = '".$pCorreo."'")) die();  
-                $retorno = false;
+                $retorno = array();
 
             while ($row = mysqli_fetch_array($result)) {
-                $retorno = $row;
+                $retorno[] = $row;
             }
         }
 
