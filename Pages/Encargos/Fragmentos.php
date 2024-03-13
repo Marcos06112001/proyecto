@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-    <head th:replace="~{Layout/_Layout :: head}">
-        <title>TechShop</title>
-    </head>
-    <body>
+<?php 
 
-        <!-- 1 Sección principal para mostrar la informaccion del foro -->
-        <section th:fragment="contenedorPrincipal" id="Encargos" class="mt-5 mb-5">
+function contenedorPrincipal(){
+    $correo = $_SESSION["correoGlobal"];
+    require_once "../../include/functions/recoge.php";
+    require_once "../../DAL/usuarios.php";
+    try{
+        $usuario = ObtenerUnUsuarios($correo);
+    }catch(Exception $e){
+        $usuario = null;
+
+    }
+               
+    
+    ?>
+        <section id="Encargos" class="mt-5 mb-5">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 pr-0">
@@ -55,14 +60,12 @@
                             <div class="card-header text-center" style="background-color: #FFD5BB;">
                                 <h4>Pide tu encargo aqui mismo!</h4>
                             </div>
-                            <form th:action="@{/encargos/guardar}" th:object="${foro}"
-                                  method="POST" class="was-validated" enctype="multipart/form-data">
+                            <form action="Index.php" method="POST" class="was-validated" enctype="multipart/form-data">
                                 <div class="card-body">
-
                                     <div class="m-5">
                                         <div class="mb-3">
                                             <label  for="txtNombre">Nombre del encargo:</label>
-                                            <input type="text" disabled="disabled" class="form-control" th:value="${usuarioActual.nombre + ' ' + usuarioActual.apellido1 + ' ' + usuarioActual.apellido2}" name="nombre" style="border-radius: 20px;"/>
+                                            <input type="text" disabled="disabled" class="form-control" value="<?php if(!is_null($usuario)){ echo $usuario['NOMBRE'] . ' ' . $usuario['APELLIDO_1'] . ' ' . $usuario['APELLIDO_2']; } ?>" name="nombre" style="border-radius: 20px;"/>
                                         </div>
                                         <div class="mb-3">
                                             <label for="txtDesc">Descripcion del Encargo</label>
@@ -70,7 +73,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label  for="txtNombre">Tamaño:</label>
-                                            <select name="correo" style="border-radius: 20px;">
+                                            <select name="tamano" style="border-radius: 20px;">
                                                 <option value="0">5 a 15 cm</option>
                                                 <option value="1">15cm a 25cm</option>
                                                 <option value="2">25cm a 35cm</option>
@@ -126,50 +129,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- info de todos los comentarios -->
-        <section th:fragment="contenedorVerMas" id="Encargos" class="mt-5 mb-5">
-
-            <th:block th:if="${comentarios.empty}">
-                <div class="row" style="padding-left: 15%;">
-                    <div class="col-2">
-                        <a class="text-dark" th:href="@{/foro}" style="font-size: 20px;"><i class="fa-solid fa-backward"></i></a>
-                    </div>
-                </div>
-                <div class="alert alert-info text-center" role="alert">
-                    No hay comentarios
-                </div>
-            </th:block>
-            <th:block th:unless="${comentarios.empty}">
-
-                <div class="row" style="padding-left: 15%;">
-                    <div class="col-2">
-                        <a class="text-dark" th:href="@{/foro}" style="font-size: 32px;"><i class="fa-solid fa-backward"></i></a>
-                    </div>
-
-                    <div class="col-10">
-                        <h2 class="text-black font-weight-bold" style="padding-left: 15%">Encargos - Todos los Comentarios</h2>
-                    </div>
-                </div>
-
-                <div class="row "  style="padding-left: 15%;padding-right: 15%">
-                    <div class="col-6 mb-3" th:each="c : ${comentarios}">
-                        <div class="card p-2 m-2" >
-                            <div class="mt-3" style="padding-left: 15%;padding-right: 15%">
-                                <div class="mb-3">
-                                    <label  for="txtNombre">Nombre que comenta:</label>
-                                    <input type="text" readonly="readonly" class="form-control" name="txtNombre" th:value="${c.usuarios.nombre  + ' ' + c.usuarios.apellido1  + ' ' + c.usuarios.apellido2 }" style="border-radius: 20px;"/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="txtDesc">Descripcion del Comentario:</label>
-                                    <textarea class="form-control" readonly="readonly" name="txtDesc" rows="10" style="border-radius: 20px; height: 350px">[[${c.comentario}]] </textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </th:block>   
-        </section>
-
-    </body>
-</html>
+<?php }        
+ ?>
+       
