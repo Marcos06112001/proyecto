@@ -13,7 +13,7 @@ function readURL(input) {
                 .attr('src', e.target.result)
                 .height(200)
                 .show(); 
-                document.getElementById('inputImagen').hidden = true;
+                document.getElementById('lblImg').hidden = true;
         };
         reader.readAsDataURL(input.files[0]);
     }
