@@ -12,7 +12,30 @@
             $metodos = ObtenerMetodosPago($Correo);
         }
         elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $Correo = $_SESSION['correoGlobal'];
+            $accion = recogePost("accion");
+            $numTarjeta = recogePost("numTarjeta");
+            if($accion == "pay"){
+                $codSeguridad = recogePost("codSeguridad");
+                $codEncargo = recogePost("codEncargo");
 
+            }
+            elseif ($accion == "delete"){
+                $retorno = EliminarMetodoPago($Correo,$numTarjeta);
+                if(!$retorno){
+                    throw ("Error en eliminar metodo");
+                }
+                else{
+                    echo "<script>
+                            Swal.fire({
+                                title: 'Accion Completa',
+                                text: 'Se elimino correctamente el metodo de pago',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            });
+                        </script>";
+                }
+            }
         }
     }
     catch(\Throwable $th)
@@ -21,7 +44,7 @@
         echo "<script>
                     Swal.fire({
                         title: 'Aviso',
-                        text: 'Ocurrio un error al obtener el usuario. Error tecnico:$th',
+                        text: 'Ocurrio un error al con el try catch php. Error tecnico:$th',
                         icon: 'error',
                         confirmButtonText: 'Ok'
                     });
@@ -29,7 +52,9 @@
     }
 ?>
 <main class="bg-Proyecto">
-    <section th:fragment="ListaMetodosP">
+    <br>
+    <br>
+    <section>
         <div class="container">
             <div class="row row-Card">
                 <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -37,10 +62,13 @@
                         <div class="card-header card-header-Proyecto">
                             <div class="row">
                                 <div class="col-2">
-                                    <a class="text-white" href="/HistorialC/Index.php" style="font-size: 32px;"><i class="fa-solid fa-backward"></i></a>
+                                    <a class="text-white" href="../HistorialC/Index.php" style="font-size: 32px;"><i class="fa-solid fa-backward"></i></a>
                                 </div>
-                                <div class="col-10">
-                                    <h2 class="text-black font-weight-bold" style="padding-left: 20%">Metodos de Pago</h2>
+                                <div class="col-8">
+                                    <h2 class="text-black font-weight-bold text-center">Metodos de Pago</h2>
+                                </div>
+                                <div class="col-2">
+                                    <a class="text-white" href="../PagosM/Agregar.php" style="font-size: 32px; display: block; text-align: right;"><i class="fa-solid fa-plus"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -48,7 +76,7 @@
                             <?php if (empty($metodos)): ?>
                                 <div class="row bubble-row p-2">
                                     <div class="col">
-                                        <p>No hay métodos de pago registrados.</p>
+                                        <p class="text-center">No hay métodos de pago registrados.</p>
                                     </div>
                                 </div>
                             <?php else: ?>
@@ -75,7 +103,8 @@
                                                     <label for="codSeguridad">Código de Seguridad:</label>
                                                     <input type="number" id="codSeguridad" name="codSeguridad" class="form-control" required />
                                                     <input type="hidden" name="numTarjeta" value="<?php echo $m['NUM_TARJETA']; ?>">
-                                                    <input type="hidden" name="accion" value="pagar">
+                                                    <input type="hidden" name="accion" value="pay">
+                                                    <input type="hidden" name="codEncargo" value="<?php echo $codEncargo; ?>">
                                                 </div>
                                                 <div class="row p-3">
                                                     <div class="col-6">
@@ -85,7 +114,7 @@
                                             </form>
                                             <form method="post">
                                                 <input type="hidden" name="numTarjeta" value="<?php echo $m['NUM_TARJETA']; ?>">
-                                                <input type="hidden" name="accion" value="eliminar">
+                                                <input type="hidden" name="accion" value="delete">
                                                 <div class="col-6">
                                                     <button type="submit" class="btn btn-Secon-Proyecto">Eliminar</button>
                                                 </div>
@@ -96,7 +125,7 @@
                             <?php endif; ?>
                         </div>
                         <div class="card-footer">
-                            <img th:src="@{/img/bannerH.png}" alt="BannerHorizontal" class="bannerH-img"/>
+                            <img src="../../img/bannerH.png" alt="BannerHorizontal" class="bannerH-img"/>
                         </div>
                     </div>
                 </div>

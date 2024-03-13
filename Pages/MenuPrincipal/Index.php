@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="col col-sm-12 col-md-12 col-lg-2 col-xl-2">
-                        <img src="/img/bannerV.png" alt="BannerVertical" class="bannerV-img"/>
+                        <img src="../../img/bannerV.png" alt="BannerVertical" class="bannerV-img"/>
                     </div>
                     <div class="col col-sm-12 col-md-12 col-lg-5 col-xl-5">
                         <div class="row col-12 m-5">

@@ -149,3 +149,40 @@ function ActualizarMetodoPago($pCorreo, $pNumTarjeta, $pNombreTitular, $pFecVenc
     return $retorno;
 }
 
+function EliminarMetodoPago($pCorreo, $pNumTarjeta) {
+    $retorno = false;
+
+    try {
+        $oConexion = Conecta();
+
+        // Formato de datos utf8
+        if(mysqli_set_charset($oConexion, "utf8")) {
+            $stmt = $oConexion->prepare("DELETE * FROM TAB_METODOS_PAG_USUARIO WHERE CORREO = ? AND NUM_TARJETA = ?");
+            $stmt->bind_param("ss", $iCorreo, $iNumTarjeta);
+
+            // Set parametros y luego ejecutar
+            $iCorreo = $pCorreo;
+            $iNumTarjeta = $pNumTarjeta;
+
+            if ($stmt->execute()) {
+                $retorno = true;
+            }
+        }
+
+    } catch (\Throwable $th) {
+        error_log($th);
+        echo "<script>
+                Swal.fire({
+                    title: 'Error al eliminar método de pago',
+                    text: 'Ha ocurrido un error al eliminar el método de pago: " . $th->getMessage() . "',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+        </script>";
+    } finally {
+        Desconectar($oConexion);
+    }
+
+    return $retorno;
+}
+

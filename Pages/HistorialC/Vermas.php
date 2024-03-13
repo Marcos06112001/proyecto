@@ -15,7 +15,7 @@
             $encargo = null;
 
             foreach ($encargos as $e) {
-                if ($e['codEncargo'] == $codEncargo) {
+                if ($e['COD_ENCARGO'] == $codEncargo) {
                     $encargo = $e;
                     break; 
                 }
@@ -38,6 +38,8 @@
     }
 ?>
 <main class="bg-Proyecto">
+    <br>
+    <br>
     <section>
         <div class="container">
             <form method="GET" action="" class="was-validated" enctype="multipart/form-data">
@@ -49,7 +51,7 @@
                             <div class="card-header card-header-Proyecto">
                                 <div class="row">
                                     <div class="col-2">
-                                        <a class="text-white" href="/historial" style="font-size: 32px;"><i class="fa-solid fa-backward"></i></a>
+                                        <a class="text-white" href="../HistorialC/Index.php" style="font-size: 32px;"><i class="fa-solid fa-backward"></i></a>
                                     </div>
                                     <div class="col-10">
                                         <h2 class="text-black font-weight-bold" style="padding-left: 20%">Detalles Pedido de <?php echo $encargo['NOM_DISENO']; ?></h2>

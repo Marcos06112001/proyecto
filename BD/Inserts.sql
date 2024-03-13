@@ -1,14 +1,14 @@
-/* INSERTS INICIALES*/
+/* INSERTS INICIALES */
 USE DB_PROYECTO_DWP_2;
 
 -- USUARIOS --
- INSERT INTO TAB_USUARIOS (CORREO,CONTRASENA,NOMBRE,APELLIDO_1,APELLIDO_2) VALUES ("camposcespedesd@gmail.com","test123","Denis","Campos","Cespedes");
- INSERT INTO TAB_USUARIOS (CORREO,CONTRASENA,NOMBRE,APELLIDO_1,APELLIDO_2) VALUES ("dchavesd.07@gmail.com","dchaves123","David","Chaves","Delgado");
+-- INSERT INTO TAB_USUARIOS (CORREO,CONTRASENA,NOMBRE,APELLIDO_1,APELLIDO_2) VALUES ("camposcespedesd@gmail.com","test123","Denis","Campos","Cespedes");
+-- INSERT INTO TAB_USUARIOS (CORREO,CONTRASENA,NOMBRE,APELLIDO_1,APELLIDO_2) VALUES ("dchavesd.07@gmail.com","dchaves123","David","Chaves","Delgado");
 
 
 -- ENCARGOS --
  INSERT INTO TAB_ENCARGOS(CORREO,NOM_DISENO,DES_DISENO,TAM_DISENO,PRECIO_DISENO,RUTA_IMAGEN,IND_ESTADO,IND_PAGADO,IND_EXPRESS,COD_DIRECCION_DEST) 
- VALUES("camposcespedesd@gmail.com","Jett","Persona duelista del Juego de Valorant que controla unas dagas y el viento","0",0.0,"https://firebasestorage.googleapis.com/v0/b/techshop-7645b.appspot.com/o/techshop%2Fencargos%2Fimg0000000000000000001Jett01.jpg?alt=media&token=952eb1cd-6de9-4400-8be8-69a8a1f520d9","N","N","N","");
+ VALUES("dchavesd.07@gmail.com","Jett","Persona duelista del Juego de Valorant que controla unas dagas y el viento","0",11000.0,"https://firebasestorage.googleapis.com/v0/b/techshop-7645b.appspot.com/o/techshop%2Fencargos%2Fimg0000000000000000001Jett01.jpg?alt=media&token=952eb1cd-6de9-4400-8be8-69a8a1f520d9","N","N","N","");
 
  INSERT INTO TAB_ENCARGOS(CORREO,NOM_DISENO,DES_DISENO,TAM_DISENO,PRECIO_DISENO,RUTA_IMAGEN,IND_ESTADO,IND_PAGADO,IND_EXPRESS,COD_DIRECCION_DEST) 
  VALUES("dchavesd.07@gmail.com","Omen","Persona controlador del Juego de Valorant que controla humos y proviende la oscuridad pro un experimento","1",12000.0,"https://firebasestorage.googleapis.com/v0/b/techshop-7645b.appspot.com/o/techshop%2Fencargos%2Fimg0000000000000000002Omen01.jpg?alt=media&token=b598bd1b-b3f1-4d04-94f1-78727c2c469d","S","S","S","");

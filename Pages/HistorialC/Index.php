@@ -28,6 +28,8 @@
     }
 ?>
 <main class="bg-Proyecto">
+    <br>
+    <br>
     <section>
         <div class="container">
             <div class="row row-Card">
@@ -91,13 +93,13 @@
                                                 <div class="col-2">
                                                     <div class="row col-12 p-3">
                                                         <?php if ($e['IND_PAGADO'] === 'N'): ?>
-                                                            <a href="/PagosM/Index.php?codEncargo=<?php echo $e['COD_ENCARGO']; ?>" class="btn btn-Proyecto">Pagos</a>
+                                                            <a href="../PagosM/Index.php?codEncargo=<?php echo $e['COD_ENCARGO']; ?>" class="btn btn-Proyecto">Pagos</a>
                                                         <?php elseif ($e['IND_PAGADO'] === 'S'): ?>
                                                             <button class="btn btn-Proyecto" disabled="disabled">Pagos</button>
                                                         <?php endif; ?>
                                                     </div>
                                                     <div class="row col-12 p-3">
-                                                        <a href="/HistorialC/Vermas.php?codEncargo=<?php echo $e['COD_ENCARGO']; ?>" class="btn btn-Secon-Proyecto">Ver más</a>
+                                                        <a href="../HistorialC/Vermas.php?codEncargo=<?php echo $e['COD_ENCARGO']; ?>" class="btn btn-Secon-Proyecto">Ver más</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -107,7 +109,7 @@
                             <?php endif; ?>
                         </div>
                         <div class="card-footer">
-                            <img th:src="@{/img/bannerH.png}" alt="BannerHorizontal" class="bannerH-img"/>
+                            <img src="../../img/bannerH.png" alt="BannerHorizontal" class="bannerH-img"/>
                         </div>
                     </div>
                 </div>
