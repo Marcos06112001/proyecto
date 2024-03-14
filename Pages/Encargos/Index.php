@@ -40,13 +40,34 @@
                                 });
                             </script>";
                         } else {
-                            echo "<script>alert('Error al insertar el encargo');</script>";
+                            echo "<script>
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ha ocurrido un error al insertar el encargo',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                });
+                            </script>";
                         }
                     } else {
-                        echo "<script>alert('Error al mover la imagen');</script>";
+                        echo "<script>
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ha ocurrido un error al guardar la imagen',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                });
+                            </script>";
                     }
                 } else {
-                    echo "<script>alert('Error al cargar la imagen');</script>";
+                    echo "<script>
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ha ocurrido un error al cargar la imagen',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    </script>";
                 }
             }
             else //no hay imagen
@@ -64,7 +85,14 @@
                         });
                     </script>";
                 } else {
-                    echo "<script>alert('Error al insertar el encargo');</script>";
+                    echo "<script>
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ha ocurrido un error al insertar el encargo',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                });
+                            </script>";
                 }
             }
         }
