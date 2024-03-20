@@ -5,7 +5,7 @@
 </head>
 <body class="bg-Proyecto">
    <header th:replace="~{Layout/_Layout :: headerPaginas}"></header>
-    <section th:replace="~{Galeria/Fragmentos :: filtros}"></section>
+    <section th:replace="~{Galeria/Fragmentos :: /pruebas/listado/1}"></section>
     <section th:replace="~{Galeria/fragmentos :: listadoGaleria}"></section>
     <footer th:replace="~{Layout/_Layout :: footer}"></footer>
 </body>
