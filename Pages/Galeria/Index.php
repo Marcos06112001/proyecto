@@ -4,9 +4,9 @@
     <title>Creaciones Mari - Menu Principal</title>
 </head>
 <body class="bg-Proyecto">
-   <header th:replace="~{Layout/_Layout :: headerPaginas}"></header>
+    <header th:replace="~{Layout/_Layout :: headerPaginas}"></header>
     <section th:replace="~{Galeria/Fragmentos :: /pruebas/listado/1}"></section>
+    <?php include "../../Pages/Galeria/Fragmentos.php"; ?>
     <section th:replace="~{Galeria/fragmentos :: listadoGaleria}"></section>
     <footer th:replace="~{Layout/_Layout :: footer}"></footer>
 </body>
-</html>

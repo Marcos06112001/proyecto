@@ -20,6 +20,9 @@
                 $passwordHash = password_hash($Pass, PASSWORD_BCRYPT);
                 $result = InsertarUsuarios($Correo,$passwordHash,$Nom,$Ape1,$Ape2);
                 if($result == true){
+                    $_SESSION['nombre'] = $Nom;
+            $_SESSION['apellido1'] = $Ape1;
+            $_SESSION['apellido2'] = $Ape2;
                     header("Location: Index.php?estado=1");
                 }
                 else{

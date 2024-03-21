@@ -3,7 +3,7 @@
     session_start();
     include "../../include/templates/headerPaginas.php";
     require_once "../../include/functions/recoge.php";
-    
+
 ?>
 <main class="bg-Proyecto">
     <section id="Foro" class="mt-5 mb-5">
@@ -56,10 +56,12 @@
                                     <div class="card-body">
 
                                         <div class="m-5">
-                                            <div class="mb-3">
+                                        <div class="mb-3">
                                                 <label  for="txtNombre">Nombre que comenta:</label>
-                                                <input type="text" disabled="disabled" class="form-control" th:value="${usuarioActual.nombre + ' ' + usuarioActual.apellido1 + ' ' + usuarioActual.apellido2}" name="correo" style="border-radius: 20px;"/>
-                                            </div>
+                                                <input type="text" readonly="readonly" class="form-control" name="txtNombre" value="<?php echo $_SESSION['nombre'] . ' ' . $_SESSION['apellido1'] . ' ' . $_SESSION['apellido2']; ?>" style="border-radius: 20px;"/>
+
+
+
                                             <div class="mb-3">
                                                 <label for="txtDesc">Descripcion del Comentario:</label>
                                                 <textarea class="form-control" name="comentario" style="border-radius: 20px; height: 350px"> </textarea>
@@ -79,4 +81,4 @@
 </main>
 <?php
     include "../../include/templates/footer.php";
-?>
+?>  
