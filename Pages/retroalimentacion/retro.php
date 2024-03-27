@@ -1,4 +1,5 @@
 <?php
+include "../../include/templates/headerPaginas.php";
 echo "<h2>Retroalimentación Registrada</h2>";
 
 function Conecta(){
