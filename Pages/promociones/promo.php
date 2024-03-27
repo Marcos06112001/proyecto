@@ -1,4 +1,5 @@
 <?php
+include "../../include/templates/headerPaginas.php";
 echo "<h2>Retroalimentación Registrada</h2>";
 
 $servername = "localhost";
@@ -18,8 +19,8 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
   // Mostrar los datos en una tabla
+  /*
   echo "<table>";
-  echo "<tr><th>CORREO</th><th>COD_RETROALIMENTACION</th><th>COMENTARIO</th><th>VALORACION</th></tr>";
   while($row = $result->fetch_assoc()) {
     echo "<tr>";
     echo "<td>".$row["CORREO"]."</td>";
@@ -28,55 +29,36 @@ if ($result->num_rows > 0) {
     echo "<td>".$row["VALORACION"]."</td>";
     echo "</tr>";
   }
-  echo "</table>";
+  echo "</table>";*/
 } else {
   echo "0 resultados";
-}
+}//
 
 // Cerrar conexión
 $conn->close();
 ?>
 
-<h2>Envía tu Retroalimentación</h2>
-<form method="post" action="guardar_retroalimentacion.php">
-  <label for="correo">Correo Electrónico:</label><br>
-  <input type="email" id="correo" name="correo" required><br><br>
+<h2>Crear Promoción</h2>
+<form method="post" action="guardar_promo.php">
+  <div class="form-group">
+    <label for="descripcion">Descripción:</label>
+    <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+  </div>
   
-  <label for="comentario">Comentario:</label><br>
-  <textarea id="comentario" name="comentario" rows="4" cols="50" required></textarea><br><br>
+  <div class="form-group">
+    <label for="fechaInicio">Fecha de Inicio:</label>
+    <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
+  </div>
   
-  <label for="valoracion">Valoración (1-5):</label><br>
-  <input type="number" id="valoracion" name="valoracion" min="1" max="5" required><br><br>
+  <div class="form-group">
+    <label for="fechaFin">Fecha de Fin:</label>
+    <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
+  </div>
   
-  <input type="submit" value="Enviar">
+  <div class="form-group">
+    <label for="descuento">Descuento:</label>
+    <input type="number" class="form-control" id="descuento" name="descuento" min="0" max="100" required>
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Crear Promoción</button>
 </form>
- y esta es la conexion: <?php
-function Conecta(){
-    $servername = "localhost";
-    $username = "root";
-    $password = ""; 
-    $database = "DB_PROYECTO_DWP_2";
-    try{
-        // Crear conexión
-        $conn = new mysqli($servername, $username, $password, $database);
-
-        // Verificar conexión
-        if ($conn->connect_error) {
-            echo "Ocurrió un error al establecer la conexión " . mysqli_connect_error();
-            die("Error de conexión: " . $conn->connect_error);
-            
-        }
-        return $conn;
-
-    }
-    catch(\Throwable $ex)
-    {
-        echo $ex;
-        error_log($ex);
-    }  
-}
-
-function Desconectar($conexion) {
-    mysqli_close($conexion);
-}
-?>
