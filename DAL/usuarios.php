@@ -102,7 +102,7 @@ function UpdateUsuarios($pCorreo,$pPass,$pNombre,$pApellido1,$pApellido2, $pImag
 
         // formato de datos utf8
         if(mysqli_set_charset($oConexion, "utf8")){
-            $stmt = $oConexion->prepare("UPDATE TAB_USUARIOS SET CONTRASENA = ?, NOMBRE = ?, APELLIDO_1 = ?, APELLIDO_2 = ? RUTA_IMAGEN = ? WHERE CORREO = ?");
+            $stmt = $oConexion->prepare("UPDATE TAB_USUARIOS SET CONTRASENA = ?, NOMBRE = ?, APELLIDO_1 = ?, APELLIDO_2 = ?, RUTA_IMAGEN = ? WHERE CORREO = ? ");
             $stmt->bind_param("ssssss", $iPass,$iNombre,$iApellido1,$iApellido2,$iImagen,$iCorreo);
 
             // set parametros y luego ejecutar

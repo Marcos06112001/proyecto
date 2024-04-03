@@ -66,7 +66,7 @@ function ObtenerUnEncargos($pCorreo){
     return $retorno;
 }
 
-function InsertarEncargo($pCorreo, $pNomDiseno, $pDesDiseno, $pTamDiseno, $pPrecioDiseno, $pRutaImagen, $pCodDireccionDest) {
+function InsertarEncargo($pCorreo, $pNomDiseno, $pDesDiseno, $pTamDiseno, $pPrecioDiseno, $pRutaImagen, $pCodDireccionDest, $pIndExpress) {
     $retorno = false;
 
     try {
@@ -74,8 +74,8 @@ function InsertarEncargo($pCorreo, $pNomDiseno, $pDesDiseno, $pTamDiseno, $pPrec
 
         // Formato de datos utf8
         if(mysqli_set_charset($oConexion, "utf8")) {
-            $stmt = $oConexion->prepare("INSERT INTO TAB_ENCARGOS (CORREO, NOM_DISENO, DES_DISENO, TAM_DISENO, PRECIO_DISENO, RUTA_IMAGEN, COD_DIRECCION_DEST, IND_ESTADO) VALUES (?, ?, ?, ?, ?, ?, ?, 'A')");
-            $stmt->bind_param("ssssdsi", $iCorreo, $iNomDiseno, $iDesDiseno, $iTamDiseno, $iPrecioDiseno, $iRutaImagen, $iCodDireccionDest);
+            $stmt = $oConexion->prepare("INSERT INTO TAB_ENCARGOS (CORREO, NOM_DISENO, DES_DISENO, TAM_DISENO, PRECIO_DISENO, RUTA_IMAGEN, COD_DIRECCION_DEST, IND_ESTADO, IND_PAGADO, IND_EXPRESS) VALUES (?, ?, ?, ?, ?, ?, ?, 'A','N',?)");
+            $stmt->bind_param("ssssdsis", $iCorreo, $iNomDiseno, $iDesDiseno, $iTamDiseno, $iPrecioDiseno, $iRutaImagen, $iCodDireccionDest, $iIndExpress);
 
             // Set parametros y luego ejecutar
             $iCorreo = $pCorreo;
@@ -85,6 +85,7 @@ function InsertarEncargo($pCorreo, $pNomDiseno, $pDesDiseno, $pTamDiseno, $pPrec
             $iPrecioDiseno = $pPrecioDiseno;
             $iRutaImagen = $pRutaImagen;
             $iCodDireccionDest = $pCodDireccionDest;
+            $iIndExpress = $pIndExpress;
 
             if ($stmt->execute()) {
                 $retorno = true;

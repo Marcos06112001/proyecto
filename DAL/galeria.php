@@ -1,57 +1,62 @@
 <?php
 require_once 'conexion.php';
 
-function obtenerGaleria($conexion) {
+function ObtenerTodaGaleria(){
     try {
-        $sql = "SELECT * FROM TAB_GALERIA";
-        $stmt = $conexion->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $galeria = array();
-        while ($row = $result->fetch_assoc()) {
-            $galeria[] = $row;
+        $oConexion = Conecta();
+
+        // formato de datos utf8
+        if(mysqli_set_charset($oConexion, "utf8")){
+
+            if(!$result = mysqli_query($oConexion, "SELECT COD_DISENO, NOM_DISENO, DES_DISENO, RUTA_IMAGEN, TIPO_DISENO FROM TAB_GALERIA")) die();  
+            $retorno = array();
+
+            while ($row = mysqli_fetch_array($result)) {
+                $retorno[] = $row;
+            }
         }
-        return $galeria;
-    } catch (\Throwable $ex) {
-        echo $ex;
-        error_log($ex);
-        return null;
+
+    } catch (\Throwable $th) {
+        error_log($th);
+        echo "<script>
+                Swal.fire({
+                    title: 'Error al obtener diseños',
+                    text: 'Ha ocurrido un error al obtener todos los diseños: " . $th->getMessage() . "',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            </script>";
+    }finally{
+        Desconectar($oConexion);
     }
+
+    return $retorno;
 }
 
-function mostrarGaleria($galeria) {
-    if ($galeria) {
-        foreach ($galeria as $diseno) {
-            echo "<div class='diseno'>";
-            echo "<h2>" . $diseno['nom_diseno'] . "</h2>";
-            echo "<p>" . $diseno['des_diseno'] . "</p>";
-            echo "<img src='" . $diseno['ruta_imagen'] . "' alt='" . $diseno['nom_diseno'] . "'>";
-            echo "</div>";
+function FiltrarProductos($nombre = null, $tipo = null) {
+    try {
+        $oConexion = Conecta();
+
+        if(mysqli_set_charset($oConexion, "utf8")) {
+            $query = "SELECT * FROM TAB_GALERIA WHERE 1=1";
+            if ($nombre !== null) {
+                $query .= " AND NOM_DISENO LIKE '%$nombre%'";
+            }
+            if ($tipo !== null && $tipo !== 'T') {
+                $query .= " AND TIPO_DISENO = '$tipo'";
+            }
+            $result = mysqli_query($oConexion, $query);
+            $productos = [];
+            while ($row = mysqli_fetch_array($result)) {
+                $productos[] = $row;
+            }
+            return $productos;
         }
-    } else {
-        echo "No se encontraron diseños.";
+    } catch (\Throwable $th) {
+        error_log($th);
+        // Manejo de errores
+    } finally {
+        Desconectar($oConexion);
     }
+    return [];
 }
-
-$conexion = Conecta();
-
-// Mostrar las imágenes de la galería
-$galeria = obtenerGaleria($conexion);
-if ($galeria) {
-    foreach ($galeria as $diseno) {
-        echo "<div class='col-md-4 mb-3'>";
-        echo "<div class='card p-2 m-2'>";
-        echo "<figure><img src='" . $diseno['ruta_imagen'] . "' class='card-img-top content-center' alt='...' height='400px' style='width: 100%;'/>";echo "<figcaption><span class='text-success'>" . $diseno['nom_diseno'] . "</span></figcaption>";
-        echo "</figure>";
-        echo "</div>";
-        echo "</div>";
-    }
-} else {
-    echo "imágenes no encontras";
-}
-
-// Mostrar la galería actualizada
-mostrarGaleria($galeria);
-
-Desconectar($conexion);
-?>

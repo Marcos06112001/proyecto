@@ -1,10 +1,11 @@
 <?php 
-
 function contenedorPrincipal(){
     $correo = $_SESSION["correoGlobal"];
+   
     require_once "../../include/functions/recoge.php";
     require_once "../../DAL/usuarios.php";
     try{
+        //$test = ObtenerUsuarios();
         $usuario = ObtenerUnUsuarios($correo);
     }catch(Exception $e){
         $usuario = null;
@@ -24,7 +25,7 @@ function contenedorPrincipal(){
                                 <h4 class="text-center">Haz tu Pedido!</h4>
                                 <div class="mt-5" style="padding-left: 15%;padding-right: 15%">
 
-                                    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                                    <div id="carouselAutoPlay" class="carousel slide" data-bs-ride="carousel">
                                         <div class="carousel-inner">
                                             <div class="carousel-item active" data-bs-interval="1500">
                                                 <img src="https://firebasestorage.googleapis.com/v0/b/techshop-7645b.appspot.com/o/techshop%2Fgaleria%2Fimg0000000000000000021Mario01.jpg?alt=media&token=2575c7a8-48a9-4453-b58a-acd9862baf27" class="d-block w-100" alt="..."/>
@@ -39,13 +40,13 @@ function contenedorPrincipal(){
                                                 <img src="https://firebasestorage.googleapis.com/v0/b/techshop-7645b.appspot.com/o/techshop%2Fgaleria%2Fimg0000000000000000010Pulseras01.jpg?alt=media&token=07fe4532-1c45-48da-9877-e0aa132634a6" class="d-block w-100" alt="..."/>
                                             </div>
                                         </div>
-                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselAutoPlay" data-bs-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Previous</span>
+                                            <span class="visually-hidden">Anterior</span>
                                         </button>
-                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselAutoPlay" data-bs-slide="next">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Next</span>
+                                            <span class="visually-hidden">Siguiente</span>
                                         </button>
                                     </div> 
                                 </div>
@@ -65,7 +66,7 @@ function contenedorPrincipal(){
                                     <div class="m-5">
                                         <div class="mb-3">
                                             <label  for="txtNombre">Nombre del encargo:</label>
-                                            <input type="text" disabled="disabled" class="form-control" value="<?php if(!is_null($usuario)){ echo $usuario['NOMBRE'] . ' ' . $usuario['APELLIDO_1'] . ' ' . $usuario['APELLIDO_2']; } ?>" name="nombre" style="border-radius: 20px;"/>
+                                            <input type="text"  class="form-control" name="nombre" style="border-radius: 20px;"/>
                                         </div>
                                         <div class="mb-3">
                                             <label for="txtDesc">Descripcion del Encargo</label>
@@ -87,6 +88,7 @@ function contenedorPrincipal(){
                                                     <center>
                                                         <label for="inputImagen" id="lblImg" class="agregarFotoPerf" style="cursor: pointer; display: block; background-size: cover; width: 150px; height: 133px;background-image: url('../../img/agregarImg.png');"></label>
                                                         <input type="file" onchange="readURL(this);" id="inputImagen" name="imagen" style="display:none;" />
+                                                        <img id="blah" style="display: none;" />
                                                     </center>
                                                 </div>
                                             </div>

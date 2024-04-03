@@ -15,6 +15,7 @@
             $nomDiseno = recogePost("nombre");
             $desDiseno = recogePost("desc");
             $tamano = recogePost("tamano");
+            $indEntrega = isset($_POST['indEntrega']) ? 'S' : 'N';
 
             if(isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === UPLOAD_ERR_OK) // si hay imagen
             {
@@ -28,7 +29,7 @@
                 if ($errorImg === UPLOAD_ERR_OK) {
                     if (move_uploaded_file($tempNombre, $destino . $nomGuardar)) {
                         $rutaImagen = $destino . $nomGuardar;
-                        $insert = InsertarEncargo($correo, $nomDiseno, $desDiseno, $tamano, "", $rutaImagen, 0);
+                        $insert = InsertarEncargo($correo, $nomDiseno, $desDiseno, $tamano, "", $rutaImagen, 0,$indEntrega);
 
                         if ($insert) {
                             echo "<script>
@@ -40,19 +41,40 @@
                                 });
                             </script>";
                         } else {
-                            echo "<script>alert('Error al insertar el encargo');</script>";
+                            echo "<script>
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ha ocurrido un error al insertar el encargo',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                });
+                            </script>";
                         }
                     } else {
-                        echo "<script>alert('Error al mover la imagen');</script>";
+                        echo "<script>
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ha ocurrido un error al guardar la imagen',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                });
+                            </script>";
                     }
                 } else {
-                    echo "<script>alert('Error al cargar la imagen');</script>";
+                    echo "<script>
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ha ocurrido un error al cargar la imagen',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    </script>";
                 }
             }
             else //no hay imagen
             {
                 
-                $insert = InsertarEncargo($correo, $nomDiseno, $desDiseno, $tamano, "", null , 0);
+                $insert = InsertarEncargo($correo, $nomDiseno, $desDiseno, $tamano, "", null , 0,$indEntrega);
 
                 if ($insert) {
                     echo "<script>
@@ -64,7 +86,14 @@
                         });
                     </script>";
                 } else {
-                    echo "<script>alert('Error al insertar el encargo');</script>";
+                    echo "<script>
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ha ocurrido un error al insertar el encargo',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                });
+                            </script>";
                 }
             }
         }
