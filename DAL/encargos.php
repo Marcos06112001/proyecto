@@ -152,3 +152,37 @@ function UpdateEncargo($pCorreo, $pNomDiseno, $pDesDiseno, $pTamDiseno, $pPrecio
     return $retorno;
 }
 
+function PagarEncargo($pCodEncargo) {
+    $retorno = false;
+
+    try {
+        $oConexion = Conecta();
+
+        // Formato de datos utf8
+        if(mysqli_set_charset($oConexion, "utf8")) {
+            $stmt = $oConexion->prepare("UPDATE TAB_ENCARGOS SET IND_PAGADO = 'S' WHERE COD_ENCARGO = ?");
+            $stmt->bind_param("i", $iCodEncargo);
+
+            $iCodEncargo = $pCodEncargo;
+
+            if ($stmt->execute()) {
+                $retorno = true;
+            }
+        }
+
+    } catch (\Throwable $th) {
+        error_log($th);
+        echo "<script>
+                Swal.fire({
+                    title: 'Error al actualizar encargo',
+                    text: 'Ha ocurrido un error al actualizar el encargo: " . $th->getMessage() . "',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+        </script>";
+    } finally {
+        Desconectar($oConexion);
+    }
+
+    return $retorno;
+}

@@ -8,6 +8,8 @@
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             require_once "../../DAL/metodosPago.php";
             $codEncargo = recogeGet("codEncargo");
+            $_SESSION['codEncargo'] = $codEncargo;
+
             $Correo = $_SESSION['correoGlobal'];
             $metodos = ObtenerMetodosPago($Correo);
         }

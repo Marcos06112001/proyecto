@@ -8,7 +8,7 @@
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             require_once "../../DAL/encargos.php";
             $Correo = $_SESSION['correoGlobal'];
-    
+            $_SESSION['codEncargo'] = null;
             $encargos = ObtenerUnEncargos($Correo);
 
         }

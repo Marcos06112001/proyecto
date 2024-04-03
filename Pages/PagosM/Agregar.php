@@ -5,7 +5,33 @@
     include "../../include/templates/headerPaginas.php";
     require_once "../../include/functions/recoge.php";
     try{
-        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $indEntrega = isset($_POST['guardarInfo']) ? 'S' : 'N';
+            $numTarjeta = recogePost("numTarjeta");
+            $caducidad1 = recogePost("caducidad_1");
+            $caducidad2 = recogePost("caducidad_2");
+            $codSeguridad = recogePost("codSeguridad");
+            $nombre = recogePost("nombre");
+            $apellidos = recogePost("apellidos");
+            $email = recogePost("email");
+            $pais = recogePost("pais");
+            $localidad = recogePost("localidad");
+            $codPostal = recogePost("codPostal");
+            $telefono = recogePost("telefono");
+
+            $codEncargo = $_SESSION['codEncargo'];
+
+            if($indEntrega=="N")
+            {
+                $pago = PagarEncargo($codEncargo);
+                header("Location: ../HistorialC/Index.php");
+            }
+            else
+            {
+
+            }
+        }
+
     }
     catch(\Throwable $th)
     {
@@ -37,23 +63,23 @@
                                 </div>
                             </div>
                         </div>
-                        <form>
+                        <form method="post">
                         
                             <div class="card-body card-body-Proyecto" style="overflow-y: auto">
                                 <div class="container">
                                     <div class="row mb-2">
                                         <div class="col-4">
                                             <label for="numTarjeta"  class="ml-2" >Numero de Tarjeta       </label>
-                                            <input type="number" style="width: 100%;" class="m-1" id="numTarjeta" onchange="checkFirstDigit()"> 
+                                            <input type="number" required style="width: 100%;" class="m-1" id="numTarjeta" onchange="checkFirstDigit()"> 
                                         </div>    
                                         <div class="col-3">
                                             <label >Fecha de Caducidad</label>
-                                            <input type="number" class="m-1" style="width: 40%;" oninput="validarLongitud(this, 2)"  id="caducidad_1" > 
-                                            <input type="number" class="m-1" style="width: 40%;" oninput="validarLongitud(this, 2)" id="caducidad_2" > 
+                                            <input type="number" required class="m-1" style="width: 40%;" oninput="validarLongitud(this, 2)"  id="caducidad_1" > 
+                                            <input type="number" required class="m-1" style="width: 40%;" oninput="validarLongitud(this, 2)" id="caducidad_2" > 
                                         </div> 
                                         <div class="col-3">
                                             <label for="codSeguridad">Codigo de Seguridad</label>
-                                            <input type="number" class="m-1" style="width: 40%;" oninput="validarLongitud(this, 4)" id="codSeguridad" > 
+                                            <input type="number" required class="m-1" style="width: 40%;" oninput="validarLongitud(this, 4)" id="codSeguridad" > 
                                         </div>      
                                     </div>
                                     <div class="row text-center ">
@@ -76,21 +102,21 @@
                                         <div class="row p-0 mb-2">
                                             <div class="col-5">
                                                 <label for="nombre" >Nombre</label>
-                                                <input type="text" style="width: 100%;" class="m-1 " id="apellidos" >
+                                                <input type="text" required style="width: 100%;" class="m-1 " id="apellidos" >
                                             </div>
                                             <div class="col-5">
                                                 <label for="apellidos" >Apellidos</label>
-                                                <input type="text" style="width: 100%;" class="m-1" id="apellidos" > 
+                                                <input type="text" required style="width: 100%;" class="m-1" id="apellidos" > 
                                             </div>
                                         </div>
                                         <div class="row p-0 mb-2">
                                             <div class="row">
                                                 <label for="email" >Direccion email de Facturacion</label>
-                                                <input type="email" style="width: 100%;" class="m-1" id="email" >
+                                                <input type="email" required style="width: 100%;" class="m-1" id="email" >
                                             </div>
                                             <div class="row">
                                                 <label for="pais" >Pais</label>
-                                                <input type="text" style="width: 50%;" class="m-1" id="pais" > 
+                                                <input type="text" required style="width: 50%;" class="m-1" id="pais" > 
                                             </div>
                                             
                                             
@@ -99,11 +125,11 @@
                                     <div class="col-4">
                                         <div>
                                             <label for="localidad" >Localidad</label>
-                                            <input type="text" style="width: 100%;" class="m-1" id="localidad" >
+                                            <input type="text" required style="width: 100%;" class="m-1" id="localidad" >
                                             <label for="codPostal" >Codigo postal o ZIP</label>
-                                            <input type="text" style="width: 100%;" class="m-1" id="codPostal" > 
+                                            <input type="text" required style="width: 100%;" class="m-1" id="codPostal" > 
                                             <label for="telefono" >Telefono</label>
-                                            <input type="text" style="width: 100%;" class="m-1" id="telefono" > 
+                                            <input type="text" required style="width: 100%;" class="m-1" id="telefono" > 
                                         </div>
                                     </div> 
                                 </div>
@@ -117,6 +143,10 @@
                                 <label class="m-2">
                                     Podras ver la informacion de tu compra antes de procesar
                                 </label>
+                            </div>
+                            <div class="col-10"></div>
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-Proyecto" >Pagar</button>
                             </div>
 
                             
