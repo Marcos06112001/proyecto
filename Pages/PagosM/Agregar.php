@@ -4,22 +4,14 @@
     session_start();
     include "../../include/templates/headerPaginas.php";
     require_once "../../include/functions/recoge.php";
+    require_once "../../DAL/metodosPago.php";
+    require_once "../../DAL/facturacion.php";
+    require_once "../../DAL/encargos.php";
     try{
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $indEntrega = isset($_POST['guardarInfo']) ? 'S' : 'N';
-            $numTarjeta = recogePost("numTarjeta");
-            $caducidad1 = recogePost("caducidad_1");
-            $caducidad2 = recogePost("caducidad_2");
-            $codSeguridad = recogePost("codSeguridad");
-            $nombre = recogePost("nombre");
-            $apellidos = recogePost("apellidos");
-            $email = recogePost("email");
-            $pais = recogePost("pais");
-            $localidad = recogePost("localidad");
-            $codPostal = recogePost("codPostal");
-            $telefono = recogePost("telefono");
-
             $codEncargo = $_SESSION['codEncargo'];
+            $Correo = $_SESSION['correoGlobal'];
 
             if($indEntrega=="N")
             {
@@ -28,7 +20,62 @@
             }
             else
             {
+                $numTarjeta = recogePost("numTarjeta");
+                $longitud = strlen($numTarjeta);
+                $numTarjeta = substr($numTarjeta, 0, 1) . str_repeat('*', $longitud - 5) . substr($numTarjeta, -4);
 
+                $caducidad1 = recogePost("caducidad_1");
+                $caducidad2 = recogePost("caducidad_2");
+                $fecVencimiento = "20".$caducidad2 . "/" . $caducidad1 . "/01";
+
+                $codSeguridad = recogePost("codSeguridad");
+                $nombre = recogePost("nombre");
+                $apellidos = recogePost("apellidos");
+                $nomTitular = $nombre . " " . $apellidos;
+
+                $retorno = InsertarMetodoPago($Correo,$numTarjeta,$nomTitular,$fecVencimiento,$codSeguridad);
+                if(!$retorno){
+                    echo "<script>
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Error al agregar el metodo de pago',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        </script>";
+                }
+                
+                $email = recogePost("email");
+                $pais = recogePost("pais");
+                $localidad = recogePost("localidad");
+                $codPostal = recogePost("codPostal");
+                $telefono = recogePost("telefono");
+
+                $retorn2 = InsertarFacturacion($Correo,$numTarjeta, $pais,$codPostal,$telefono,$email);
+                if(!$retorno){
+                    echo "<script>
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Error al agregar la facturacion',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        </script>";
+                }
+
+                $pago = PagarEncargo($codEncargo);
+                if(!$pago){
+                    echo "<script>
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Error al cambiar el estado de pago',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        </script>";
+                }
+
+                header("Location: ../HistorialC/Index.php");
             }
         }
 
@@ -46,6 +93,7 @@
                 </script>";
     }
 ?>
+
 <main class="bg-Proyecto">
     <br>
     <br>
@@ -70,16 +118,16 @@
                                     <div class="row mb-2">
                                         <div class="col-4">
                                             <label for="numTarjeta"  class="ml-2" >Numero de Tarjeta       </label>
-                                            <input type="number" required style="width: 100%;" class="m-1" id="numTarjeta" onchange="checkFirstDigit()"> 
+                                            <input type="number" required style="width: 100%;" class="m-1" name="numTarjeta" id="numTarjeta" onchange="checkFirstDigit()"> 
                                         </div>    
                                         <div class="col-3">
                                             <label >Fecha de Caducidad</label>
-                                            <input type="number" required class="m-1" style="width: 40%;" oninput="validarLongitud(this, 2)"  id="caducidad_1" > 
-                                            <input type="number" required class="m-1" style="width: 40%;" oninput="validarLongitud(this, 2)" id="caducidad_2" > 
+                                            <input type="number" required class="m-1" style="width: 40%;" oninput="validarLongitud(this, 2)"  name="caducidad_1" placeholder="Mes"> 
+                                            <input type="number" required class="m-1" style="width: 40%;" oninput="validarLongitud(this, 2)" name="caducidad_2" placeholder="Año"> 
                                         </div> 
                                         <div class="col-3">
                                             <label for="codSeguridad">Codigo de Seguridad</label>
-                                            <input type="number" required class="m-1" style="width: 40%;" oninput="validarLongitud(this, 4)" id="codSeguridad" > 
+                                            <input type="number" required class="m-1" style="width: 40%;" oninput="validarLongitud(this, 4)" name="codSeguridad" > 
                                         </div>      
                                     </div>
                                     <div class="row text-center ">
@@ -102,21 +150,21 @@
                                         <div class="row p-0 mb-2">
                                             <div class="col-5">
                                                 <label for="nombre" >Nombre</label>
-                                                <input type="text" required style="width: 100%;" class="m-1 " id="apellidos" >
+                                                <input type="text" required style="width: 100%;" class="m-1 " name="nombre" >
                                             </div>
                                             <div class="col-5">
                                                 <label for="apellidos" >Apellidos</label>
-                                                <input type="text" required style="width: 100%;" class="m-1" id="apellidos" > 
+                                                <input type="text" required style="width: 100%;" class="m-1" name="apellidos" > 
                                             </div>
                                         </div>
                                         <div class="row p-0 mb-2">
                                             <div class="row">
                                                 <label for="email" >Direccion email de Facturacion</label>
-                                                <input type="email" required style="width: 100%;" class="m-1" id="email" >
+                                                <input type="email" required style="width: 100%;" class="m-1" name="email" >
                                             </div>
                                             <div class="row">
                                                 <label for="pais" >Pais</label>
-                                                <input type="text" required style="width: 50%;" class="m-1" id="pais" > 
+                                                <input type="text" required style="width: 50%;" class="m-1" name="pais" > 
                                             </div>
                                             
                                             
@@ -125,11 +173,11 @@
                                     <div class="col-4">
                                         <div>
                                             <label for="localidad" >Localidad</label>
-                                            <input type="text" required style="width: 100%;" class="m-1" id="localidad" >
+                                            <input type="text" required style="width: 100%;" class="m-1" name="localidad" >
                                             <label for="codPostal" >Codigo postal o ZIP</label>
-                                            <input type="text" required style="width: 100%;" class="m-1" id="codPostal" > 
+                                            <input type="text" required style="width: 100%;" class="m-1" name="codPostal" > 
                                             <label for="telefono" >Telefono</label>
-                                            <input type="text" required style="width: 100%;" class="m-1" id="telefono" > 
+                                            <input type="text" required style="width: 100%;" class="m-1" name="telefono" > 
                                         </div>
                                     </div> 
                                 </div>
@@ -144,12 +192,11 @@
                                     Podras ver la informacion de tu compra antes de procesar
                                 </label>
                             </div>
-                            <div class="col-10"></div>
-                            <div class="col-2">
-                                <button type="submit" class="btn btn-Proyecto" >Pagar</button>
+                            <div class="row align-content-right">
+                                <div class="col-2">
+                                    <button type="submit" class="btn btn-Proyecto" >Pagar</button>
+                                </div>
                             </div>
-
-                            
                         </form>
                         <div class="card-footer">
                             <img src="../../img/bannerH.png" alt="BannerHorizontal" class="bannerH-img"/>

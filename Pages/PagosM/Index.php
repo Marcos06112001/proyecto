@@ -4,9 +4,11 @@
     session_start();
     include "../../include/templates/headerPaginas.php";
     require_once "../../include/functions/recoge.php";
+    require_once "../../DAL/metodosPago.php";
+    require_once "../../DAL/facturacion.php";
+    require_once "../../DAL/encargos.php";
     try{
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            require_once "../../DAL/metodosPago.php";
             $codEncargo = recogeGet("codEncargo");
             $_SESSION['codEncargo'] = $codEncargo;
 
@@ -20,9 +22,44 @@
             if($accion == "pay"){
                 $codSeguridad = recogePost("codSeguridad");
                 $codEncargo = recogePost("codEncargo");
-
+                if(VerificaCodSeg($Correo,$numTarjeta,$codSeguridad)){
+                    $pago = PagarEncargo($codEncargo);
+                    if(!$pago){
+                        echo "<script>
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Error al cambiar el estado de pago',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                });
+                            </script>";
+                    }
+                    header("Location: ../HistorialC/Index.php");
+                }
+                else{
+                    echo "<script>
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Error al pagar, codigo de seguridad incorrecto',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        </script>";
+                }
             }
             elseif ($accion == "delete"){
+                $retorno2 = EliminarFacturacion($Correo,$numTarjeta);
+                if(!$retorno2){
+                    echo "<script>
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Error al eliminar facturacion ligada',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        </script>";
+                }
+
                 $retorno = EliminarMetodoPago($Correo,$numTarjeta);
                 if(!$retorno){
                     echo "<script>
@@ -34,16 +71,8 @@
                             });
                         </script>";
                 }
-                else{
-                    echo "<script>
-                            Swal.fire({
-                                title: 'Accion Completa',
-                                text: 'Se elimino correctamente el metodo de pago',
-                                icon: 'success',
-                                confirmButtonText: 'Ok'
-                            });
-                        </script>";
-                }
+
+               
             }
         }
     }
@@ -90,9 +119,19 @@
                                 </div>
                             <?php else: ?>
                                 <?php foreach ($metodos as $m): ?>
+                                    
                                     <div class="row bubble-row p-2">
                                         <div class="col-3">
-                                            <img src="<?php echo $m['RUTA_IMAGEN']; ?>" class="card-img-top" alt="RutImagen" />
+                                            <?php
+                                                $numTarjeta = $m['NUM_TARJETA'];
+                                                $primerCaracter = substr($numTarjeta, 0, 1);
+
+                                                if ($primerCaracter === '4') {
+                                                    echo '<img src="https://www.baccredomatic.com/sites/default/files/styles/card_646xauto/public/2022-09/new-debito-laroja-visa.png" class="card-img-top" alt="tarjeta Visa" />';
+                                                } elseif ($primerCaracter === '5') {
+                                                    echo '<img src="https://www.baccredomatic.com/sites/default/files/styles/card_646xauto/public/2022-09/pa-tarjeta-debito-mastercard.png" class="card-img-top" alt="Tarjeta Mastercard">';
+                                                } 
+                                            ?>
                                         </div>
                                         <div class="col-6">
                                             <div class="row col-12 p-1">

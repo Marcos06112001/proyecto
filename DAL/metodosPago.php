@@ -157,7 +157,7 @@ function EliminarMetodoPago($pCorreo, $pNumTarjeta) {
 
         // Formato de datos utf8
         if(mysqli_set_charset($oConexion, "utf8")) {
-            $stmt = $oConexion->prepare("DELETE * FROM TAB_METODOS_PAG_USUARIO WHERE CORREO = ? AND NUM_TARJETA = ?");
+            $stmt = $oConexion->prepare("DELETE FROM TAB_METODOS_PAG_USUARIO WHERE CORREO = ? AND NUM_TARJETA = ?");
             $stmt->bind_param("ss", $iCorreo, $iNumTarjeta);
 
             // Set parametros y luego ejecutar
@@ -185,4 +185,47 @@ function EliminarMetodoPago($pCorreo, $pNumTarjeta) {
 
     return $retorno;
 }
+
+function VerificaCodSeg($pCorreo, $pNumTarjeta, $pCodSeguridad) {
+    $coincide = false;
+
+    try {
+        $oConexion = Conecta();
+
+        // Formato de datos utf8
+        if(mysqli_set_charset($oConexion, "utf8")) {
+            $stmt = $oConexion->prepare("SELECT 1 FROM TAB_METODOS_PAG_USUARIO WHERE CORREO = ? AND NUM_TARJETA = ? AND COD_SEGURIDAD = ?");
+            $stmt->bind_param("sss", $iCorreo, $iNumTarjeta, $iCodSeguridad);
+
+            // Set parametros y luego ejecutar
+            $iCorreo = $pCorreo;
+            $iNumTarjeta = $pNumTarjeta;
+            $iCodSeguridad = $pCodSeguridad;
+
+            if ($stmt->execute()) {
+                $stmt->store_result();
+                if ($stmt->num_rows > 0) {
+                    $coincide = true;
+                }
+            }
+        }
+
+    } catch (\Throwable $th) {
+        error_log($th);
+        echo "<script>
+                Swal.fire({
+                    title: 'Error al verificar código de seguridad',
+                    text: 'Ha ocurrido un error al verificar el código de seguridad: " . $th->getMessage() . "',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            </script>";
+        return $th;
+    } finally {
+        Desconectar($oConexion);
+    }
+
+    return $coincide;
+}
+
 
