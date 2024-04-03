@@ -5,7 +5,7 @@
     include "../../include/templates/headerPaginas.php";
     require_once "../../include/functions/recoge.php";
     
-    include "Fragmentos.php";
+    require_once "Fragmentos.php";
 
     try{
 

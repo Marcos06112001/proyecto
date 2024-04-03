@@ -13,12 +13,11 @@
             require_once "../../include/functions/recoge.php";
             require_once "../../DAL/usuarios.php";
     
-            $nombre = recogePost("nombre");
-            $ape1 = recogePost("apellido_1");
-            $ape_2 = recogePost("apellido_2");
+            $nombre = recogePost("NOMBRE");
+            $ape1 = recogePost("APELLIDO_1");
+            $ape2 = recogePost("APELLIDO_2");
             $contra = recogePost("txtContra");
-            $passwordHash = password_hash($Pass, PASSWORD_BCRYPT);
-            $result = InsertarUsuarios($Correo,$passwordHash,$Nom,$Ape1,$Ape2);
+            $passwordHash = password_hash($contra, PASSWORD_BCRYPT);
 
             if(isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === UPLOAD_ERR_OK) // si hay imagen
             {
@@ -32,9 +31,9 @@
                 if ($errorImg === UPLOAD_ERR_OK) {
                     if (move_uploaded_file($tempNombre, $destino . $nomGuardar)) {
                         $rutaImagen = $destino . $nomGuardar;
-                        $insert = UpdateUsuarios($correo,$passwordHash,$nombre,$ape1,$ape2,$rutaImagen);
+                        $update = UpdateUsuarios($correo,$passwordHash,$nombre,$ape1,$ape2,$rutaImagen);
 
-                        if ($insert) {
+                        if ($update) {
                             header("Location: Index.php?estado=1");
 
                         } else {
@@ -71,9 +70,9 @@
             else //no hay imagen
             {
                 
-                $insert = InsertarEncargo($correo, $nomDiseno, $desDiseno, $tamano, "", null , 0);
+                $update = UpdateUsuarios($correo,$passwordHash,$nombre,$ape1,$ape2,null);
 
-                if ($insert) {
+                if ($update) {
                     header("Location: Index.php?estado=1");
                 } else {
                     echo "<script>
