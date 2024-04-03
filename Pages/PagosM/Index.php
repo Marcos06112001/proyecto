@@ -7,7 +7,7 @@
     try{
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             require_once "../../DAL/metodosPago.php";
-            $codEncargo = recogerGet("codEncargo");
+            $codEncargo = recogeGet("codEncargo");
             $Correo = $_SESSION['correoGlobal'];
             $metodos = ObtenerMetodosPago($Correo);
         }
@@ -23,7 +23,14 @@
             elseif ($accion == "delete"){
                 $retorno = EliminarMetodoPago($Correo,$numTarjeta);
                 if(!$retorno){
-                    throw ("Error en eliminar metodo");
+                    echo "<script>
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Error al eliminar el metodo de pago',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        </script>";
                 }
                 else{
                     echo "<script>

@@ -167,3 +167,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     padding: 10px; 
 }
 
+.SeleccionadoTarjeta {
+    background-color: #fde1d0;
+    color: black;
+}
